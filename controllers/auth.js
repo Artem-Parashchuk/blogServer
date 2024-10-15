@@ -22,6 +22,14 @@ export const register = async (req, res) => {
       password: hash,
     });
 
+    const token = jwt.sign(
+      {
+        id: newUser._id,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "30d" }
+    );
+
     await newUser.save();
 
     res.json({
@@ -81,18 +89,18 @@ export const getMe = async (req, res) => {
     }
 
     const token = jwt.sign(
-        {
-            id: user._id
-        },
-        process.env.JWT_SECRET,
-        {expiresIn: '30d'}
-    )
+      {
+        id: user._id,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "30d" }
+    );
 
     res.json({
-        token,
-        user,
-        message: 'Ви увійшлт в систему'
-    })
+      token,
+      user,
+      message: "Ви увійшлт в систему",
+    });
   } catch (error) {
     console.log(error.message);
   }
