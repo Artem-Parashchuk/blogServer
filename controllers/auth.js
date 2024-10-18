@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
 import User from "../models/User.js";
 
 export const register = async (req, res) => {
@@ -9,8 +8,8 @@ export const register = async (req, res) => {
     const isUsed = await User.findOne({ username });
 
     if (isUsed) {
-      return res.status(402).json({
-        message: `${username} вже використовується`,
+      return res.status(409).json({
+        message: `Ім'я вже використовується`,
       });
     }
 
@@ -34,6 +33,7 @@ export const register = async (req, res) => {
 
     res.json({
       newUser,
+      token, // Возвращаем токен
       message: "Регістрація пройшла успішно",
     });
   } catch (error) {
@@ -48,7 +48,7 @@ export const login = async (req, res) => {
 
     if (!user) {
       return res.json({
-        message: `${user} не існує`,
+        message: `Користувач не існує`, // Исправлено сообщение
       });
     }
 
@@ -84,7 +84,7 @@ export const getMe = async (req, res) => {
 
     if (!user) {
       return res.json({
-        message: `${user} не існує`,
+        message: `Користувач не існує`, 
       });
     }
 
@@ -99,7 +99,7 @@ export const getMe = async (req, res) => {
     res.json({
       token,
       user,
-      message: "Ви увійшлт в систему",
+      message: "Ви увійшли в систему", 
     });
   } catch (error) {
     console.log(error.message);
