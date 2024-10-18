@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import authRoute from "./routes/auth.js";
+import postsRoute from './routes/posts.js'
 
 let app = express();
 
@@ -21,11 +22,12 @@ app.use(express.json());
 
 //Routes
 app.use("/api/auth", authRoute);
+app.use("api/posts", postsRoute)
 
 async function connectDB() {
   try {
     await mongoose.connect(
-      `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.ceuuu.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
+      `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.uvwt7.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
     );
 
     console.log("Connect to DB");
